@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Application - Job Application Tracker
+{% endblock %}
+
+{% block content %}
+
+<h1>Edit Job Application</h1>
+
+<form method="POST">
+
+    <label for="company">Company Name</label>
+    <input
+        type="text"
+        id="company"
+        name="company"
+        value="{{ application['company'] }}"
+        required
+    >
+
+    <label for="job_title">Job Title</label>
+    <input
+        type="text"
+        id="job_title"
+        name="job_title"
+        value="{{ application['job_title'] }}"
+        required
+    >
+
+    <label for="location">Location</label>
+    <input
+        type="text"
+        id="location"
+        name="location"
+        value="{{ application['location'] }}"
+    >
+
+    <label for="job_type">Job Type</label>
+
+    <select id="job_type" name="job_type">
+
+        <option value="Internship"
+            {% if application['job_type'] == 'Internship' %}selected{% endif %}>
+            Internship
+        </option>
+
+        <option value="Full-time"
+            {% if application['job_type'] == 'Full-time' %}selected{% endif %}>
+            Full-time
+        </option>
+
+        <option value="Part-time"
+            {% if application['job_type'] == 'Part-time' %}selected{% endif %}>
+            Part-time
+        </option>
+
+        <option value="Contract"
+            {% if application['job_type'] == 'Contract' %}selected{% endif %}>
+            Contract
+        </option>
+
+    </select>
+
+    <label for="application_date">Application Date</label>
+
+    <input
+        type="date"
+        id="application_date"
+        name="application_date"
+        value="{{ application['application_date'] }}"
+    >
+
+    <label for="deadline">Deadline</label>
+
+    <input
+        type="date"
+        id="deadline"
+        name="deadline"
+        value="{{ application['deadline'] }}"
+    >
+
+    <label for="status">Status</label>
+
+    <select id="status" name="status" required>
+
+        <option value="Saved"
+            {% if application['status'] == 'Saved' %}selected{% endif %}>
+            Saved
+        </option>
+
+        <option value="Applied"
+            {% if application['status'] == 'Applied' %}selected{% endif %}>
+            Applied
+        </option>
+
+        <option value="Assessment"
+            {% if application['status'] == 'Assessment' %}selected{% endif %}>
+            Assessment
+        </option>
+
+        <option value="Interview"
+            {% if application['status'] == 'Interview' %}selected{% endif %}>
+            Interview
+        </option>
+
+        <option value="Offer"
+            {% if application['status'] == 'Offer' %}selected{% endif %}>
+            Offer
+        </option>
+
+        <option value="Rejected"
+            {% if application['status'] == 'Rejected' %}selected{% endif %}>
+            Rejected
+        </option>
+
+    </select>
+
+    <label for="job_url">Job URL</label>
+
+    <input
+        type="url"
+        id="job_url"
+        name="job_url"
+        value="{{ application['job_url'] }}"
+    >
+
+    <label for="notes">Notes</label>
+
+    <textarea
+        id="notes"
+        name="notes"
+        rows="5"
+    >{{ application['notes'] }}</textarea>
+
+    <button type="submit">Save Changes</button>
+
+</form>
+
+<p>
+    <a href="{{ url_for('applications') }}">Back to Applications</a>
+</p>
+
+{% endblock %}

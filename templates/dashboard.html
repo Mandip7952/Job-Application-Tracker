@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard - Job Application Tracker
+{% endblock %}
+
+{% block content %}
+
+<h1>Job Application Dashboard</h1>
+
+
+<!-- Statistics Cards -->
+
+<div class="dashboard">
+
+    <div class="card">
+        <h2>{{ total }}</h2>
+        <p>Total Applications</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ applied }}</h2>
+        <p>Applied</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ interviews }}</h2>
+        <p>Interviews</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ offers }}</h2>
+        <p>Offers</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ rejected }}</h2>
+        <p>Rejected</p>
+    </div>
+
+</div>
+
+
+<!-- Upcoming Deadlines -->
+
+<div class="deadlines-container">
+
+    <h2>Upcoming Deadlines</h2>
+
+    {% if upcoming_deadlines %}
+
+        {% for item in upcoming_deadlines %}
+
+            <div class="deadline-item">
+
+                <h3>
+                    {{ item["application"]["company"] }}
+                </h3>
+
+                <p>
+                    {{ item["application"]["job_title"] }}
+                </p>
+
+                <p>
+                    <strong>Deadline:</strong>
+                    {{ item["application"]["deadline"] }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    {{ item["application"]["status"] }}
+                </p>
+
+                <span class="deadline-badge">
+                    {{ item["urgency"] }}
+                </span>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No upcoming deadlines.</p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- Application Status Chart -->
+
+<div class="chart-container">
+
+    <h2>Application Status</h2>
+
+    <canvas
+        id="statusChart"
+        data-applied="{{ applied }}"
+        data-interviews="{{ interviews }}"
+        data-offers="{{ offers }}"
+        data-rejected="{{ rejected }}">
+    </canvas>
+
+</div>
+
+
+<!-- Navigation Links -->
+
+<div class="dashboard-links">
+
+    <p>
+        <a href="{{ url_for('applications') }}">
+            View Applications
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('add_application') }}">
+            Add New Application
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('home') }}">
+            Back to Home
+        </a>
+    </p>
+
+</div>
+
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const chart = document.getElementById("statusChart");
+
+    const applied = Number(chart.dataset.applied);
+    const interviews = Number(chart.dataset.interviews);
+    const offers = Number(chart.dataset.offers);
+    const rejected = Number(chart.dataset.rejected);
+
+    new Chart(chart, {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: [
+                "Applied",
+                "Interviews",
+                "Offers",
+                "Rejected"
+            ],
+
+            datasets: [{
+                data: [
+                    applied,
+                    interviews,
+                    offers,
+                    rejected
+                ]
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    position: "bottom"
+                }
+            }
+
+        }
+
+    });
+
+</script>
+
+{% endblock %}

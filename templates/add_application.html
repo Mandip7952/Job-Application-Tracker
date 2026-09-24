@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Application - Job Application Tracker
+{% endblock %}
+
+{% block content %}
+
+<h1>Add Job Application</h1>
+
+<form method="POST" action="{{ url_for('add_application') }}">
+
+    <label for="company">Company Name</label>
+    <input type="text" id="company" name="company" required>
+
+    <label for="job_title">Job Title</label>
+    <input type="text" id="job_title" name="job_title" required>
+
+    <label for="location">Location</label>
+    <input type="text" id="location" name="location">
+
+    <label for="job_type">Job Type</label>
+    <select id="job_type" name="job_type">
+        <option value="">Select job type</option>
+        <option value="Internship">Internship</option>
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Contract">Contract</option>
+    </select>
+
+    <label for="application_date">Application Date</label>
+    <input type="date" id="application_date" name="application_date">
+
+    <label for="deadline">Deadline</label>
+    <input type="date" id="deadline" name="deadline">
+
+    <label for="status">Status</label>
+    <select id="status" name="status" required>
+        <option value="">Select status</option>
+        <option value="Saved">Saved</option>
+        <option value="Applied">Applied</option>
+        <option value="Assessment">Assessment</option>
+        <option value="Interview">Interview</option>
+        <option value="Offer">Offer</option>
+        <option value="Rejected">Rejected</option>
+    </select>
+
+    <label for="job_url">Job URL</label>
+    <input type="url" id="job_url" name="job_url">
+
+    <label for="notes">Notes</label>
+    <textarea id="notes" name="notes" rows="5"></textarea>
+
+    <button type="submit">Add Application</button>
+
+</form>
+
+<p>
+    <a href="{{ url_for('applications') }}">Back to Applications</a>
+</p>
+
+{% endblock %}
